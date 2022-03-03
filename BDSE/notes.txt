@@ -1,5 +1,5 @@
 1)webscrapping zo'n 10 a 20 reviews( genoeg om te checken of je algoritme werkt)
-2)Dataframe that contains reviews and labels in 2 colloms. Labels means if it is positive of negative
+2)Dataframe that contains reviews and labels in 2 colloms. Labels means if it is positive of negative(lambda functie)
 3)Hand written reviews
 Dit is voor assignment 1 Afmaken in vakantie
 
