@@ -1,6 +1,6 @@
 import pandas as pd
 # more ugly df= pd.read_csv('IMDb movies.csv')
-dfIMDB = pd.read_csv('week2\\IMDb movies.csv', sep=',')
+dfIMDB = pd.read_csv('BDSE\\week2\\IMDb movies.csv', sep=',')
 
 
 dfTitleBudget = dfIMDB[['title', 'budget']]
