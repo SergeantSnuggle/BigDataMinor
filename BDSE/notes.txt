@@ -1,5 +1,5 @@
 1)webscrapping zo'n 10 a 20 reviews( genoeg om te checken of je algoritme werkt)
-2)Dataframe that contains reviews and labels in 2 colloms. Labels means if it is positive of negative(lambda functie)
+2)Dataframe that contains reviews and labels in 2 colloms. Labels means if it is positive of negative
 3)Hand written reviews
 Dit is voor assignment 1 Afmaken in vakantie
 
@@ -9,4 +9,20 @@ Homework:
 Werk aan opdracht 1:
 -Webscraping(save data in DB)
 -query(stored procedures) - get data from db strore in dataframe
--clean your data
+-clean your data(emoji weghalen, etc)
+
+pre processing data:
+
+Stemming data -> Worden die het zelfde zijn verwijderen, dus Play, Plays, Played, Playing, veranderen naar play
+Lemmatization -> Synomymen e.q. football & soccer
+
+Lowercase: Me & me veranderen naar alleen me
+Removing numbers. Maar je wilt bijvoorbeeld jaargetallen wel bewaren als je daar mee bezig bent
+Removing punctuations Afkortingen zoals W.A.S.P wordt veraderd naar wasp, moet je dus exceptions making of je wilt het niet verwijderen. 
+Misschien alleen verwijderen als er een spatie acter staat
+
+Noise removal:
+Remove text file headers and footers
+Remove HTML, XML, metadata etc
+
+Corpus -> large collection of texts voor NLP. Dus alle reviews bij elkaar is een corpus
