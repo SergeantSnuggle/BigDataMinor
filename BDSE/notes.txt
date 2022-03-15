@@ -1,5 +1,5 @@
 1)webscrapping zo'n 10 a 20 reviews( genoeg om te checken of je algoritme werkt)
-2)Dataframe that contains reviews and labels in 2 colloms. Labels means if it is positive of negative
+2)Dataframe that contains reviews and labels in 2 colloms. Labels means if it is positive of negative(lambda functie)
 3)Hand written reviews
 Dit is voor assignment 1 Afmaken in vakantie
 
@@ -18,7 +18,7 @@ Lemmatization -> Synomymen e.q. football & soccer
 
 Lowercase: Me & me veranderen naar alleen me
 Removing numbers. Maar je wilt bijvoorbeeld jaargetallen wel bewaren als je daar mee bezig bent
-Removing punctuations Afkortingen zoals W.A.S.P wordt veraderd naar wasp, moet je dus exceptions making of je wilt het niet verwijderen. 
+Removing punctuations Afkortingen zoals W.A.S.P wordt veraderd naar wasp, moet je dus exceptions making of je wilt het niet verwijderen.
 Misschien alleen verwijderen als er een spatie acter staat
 
 Noise removal:
@@ -26,3 +26,10 @@ Remove text file headers and footers
 Remove HTML, XML, metadata etc
 
 Corpus -> large collection of texts voor NLP. Dus alle reviews bij elkaar is een corpus
+
+Voor countcvectorizer
+#fit_transform all the new words are accounted for -> TRAIN set
+#transform only the words already met (in the TRAIN) are accounted for -> TEST set
+Je doet dit pas na het opslitsen van je data
+
+Je moet ook de reviews van de leraren preprocessen. Dus maakt een functie die de data preprocessed
