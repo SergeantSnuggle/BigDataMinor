@@ -1,14 +1,15 @@
 import pandas as pd
 
 dfReviews = pd.read_csv("BDSE\\Individual Assignment 1\\Hotel_Reviews.csv")
+dfReviews = pd.read_csv("Individual Assignment 1\\Hotel_Reviews.csv")
 dfReviews.info()
 
 dfStrippedReviews = dfReviews[["Hotel_Name", "Negative_Review", "Review_Total_Negative_Word_Counts", "Positive_Review",
                                "Review_Total_Positive_Word_Counts", "Reviewer_Score"]]
 
 #remove copy Both Negative and Positive reviews into one collums and remove No Negative and No Positive statements
-dfStrippedReviews["Review"] = dfStrippedReviews["Negative_Review"].apply(lambda x: x.replace("No Negative", " ")) + \
-                              dfStrippedReviews["Positive_Review"].apply(lambda x: x.replace("No Positive", " "))
+dfStrippedReviews["Review"] = dfStrippedReviews["Negative_Review"].apply(lambda x: x.replace("No Negative", "")) + \
+                              dfStrippedReviews["Positive_Review"].apply(lambda x: x.replace("No Positive", ""))
 
 dfReviewScore = dfStrippedReviews[["Review", "Reviewer_Score"]]
 
@@ -41,7 +42,7 @@ model.fit(X_train_vect, y_train)
 model.score(X_train_vect, y_train)
 
 y_pred = model.predict(X_test_vect)
-y_prob =  model.predict_proba(X_test_vect)[::,1]
+y_prob = model.predict_proba(X_test_vect)[::, 1]
 
 
 from sklearn.metrics import accuracy_score, f1_score, confusion_matrix,roc_auc_score

@@ -4,11 +4,12 @@ from sklearn import metrics
 from numpy.core.fromnumeric import transpose
 
 fruits = pd.read_csv("BDSE\\week3\\lesson1\\fruit_data_with_colors.txt", sep="\t")
+fruits = pd.read_csv("week3\\lesson1\\fruit_data_with_colors.txt", sep="\t")
 fruits.head()
 
 
 # IsApple Yes/ No 
-fruits['is_apple']= fruits['fruit_label'].apply(lambda x: 1 if (x==1)  else 0)
+fruits['is_apple']= fruits['fruit_label'].apply(lambda x: 1 if (x==1) else 0)
 
 
 

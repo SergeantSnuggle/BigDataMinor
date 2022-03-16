@@ -33,3 +33,18 @@ Voor countcvectorizer
 Je doet dit pas na het opslitsen van je data
 
 Je moet ook de reviews van de leraren preprocessen. Dus maakt een functie die de data preprocessed
+
+Uit database clean data halen, dus alleen een bepaalde collumen eruit halen met de select. Of je kan alleen uniques toepassen.
+De sql querry moet wat uitgebreider zijn
+
+Voeg alle data toe in 1 dataframe. Of je kan kaggle gebruiken voor trainen. Dan de andere data(Eigen data en scrapped data) gebruiken om te testen
+
+Ik doe scrapped data en eigen reviews in een database
+
+Plots ideeën:   Hoeveel per hotel
+                Hoeveel negatief en positief
+                Kijk nog meer naar de data voor ideeën
+
+(Hoef niet te gebruiken voor scrapped data en eigen data) omdat je alleen text en score scrapped
+
+4 april deadline van het rapport
