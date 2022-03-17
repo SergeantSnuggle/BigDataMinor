@@ -8,7 +8,7 @@ print("File_A_group3.csv")
 #4.	Read in the file with a line of code, no wizards are allowed
 import pandas as pd
 
-df = pd.read_csv("Week4Test\\File_A_group3.csv", sep=";")
+df = pd.read_csv("week4Test\\File_A_group3.csv", sep=";")
 
 #5.	Drop all columns from the dataframe except for
 dfNewAddresses = df[['CDR_ID', 'Start_datetime', 'End_datetime', 'Contract_ID', 'Volume', 'Charge_Point_Address', 'Charge_Point_ZIP']]
