@@ -55,4 +55,8 @@ Kijk een naar TFIDF, SQL procedures
 
 Je kan kijken in je verslag naar het verschil TFIDF tussen fit_transform etc
 
+Je kan ook de data splitten in 2 dataframes eentje positief en eentje negatief en dan op elk een test train split doen
+Daarna kan je ze samenvoegen
 
+Run randomtree met meerdere maxdepths(increment met 1) en print de resultaten in een plot voor het verslag
+Doe dan accuracy AUC en Con Mat en dan vergelijken met tijd. Hoe lang het duurde. Stop die resultaten in een dataframe

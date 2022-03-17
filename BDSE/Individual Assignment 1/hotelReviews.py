@@ -14,7 +14,7 @@ dfStrippedReviews["Review"] = dfStrippedReviews["Negative_Review"].apply(lambda 
 dfReviewScore = dfStrippedReviews[["Review", "Reviewer_Score"]]
 
 #Score 5.5 means that there are ~8% negative(~40k). Score 5 means 6% negative(~30k). Do at max 8% split
-dfReviewScore["label"] = dfReviewScore['Reviewer_Score'].apply(lambda x: 0 if x > 5.5 else 1)
+dfReviewScore["label"] = dfReviewScore['Reviewer_Score'].apply(lambda x: 1 if x > 5.5 else -1)
 
 from sklearn.model_selection import train_test_split
 
@@ -35,7 +35,8 @@ X_test_vect = vect.transform(X_test)
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.ensemble import RandomForestClassifier
 
-model = RandomForestClassifier(max_depth=2, random_state=0)
+model = RandomForestClassifier(max_depth=50, random_state=0)
+#model = MultinomialNB()
 
 model.fit(X_train_vect, y_train)
 
@@ -45,7 +46,7 @@ y_pred = model.predict(X_test_vect)
 y_prob = model.predict_proba(X_test_vect)[::, 1]
 
 
-from sklearn.metrics import accuracy_score, f1_score, confusion_matrix,roc_auc_score
+from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, roc_auc_score
 
 print("Accuracy: {:.2f}%".format(accuracy_score(y_test, y_pred) * 100))
 print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
