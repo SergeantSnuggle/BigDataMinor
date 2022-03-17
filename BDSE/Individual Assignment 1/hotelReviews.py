@@ -7,19 +7,19 @@ dfReviews.info()
 dfStrippedReviews = dfReviews[["Hotel_Name", "Negative_Review", "Review_Total_Negative_Word_Counts", "Positive_Review",
                                "Review_Total_Positive_Word_Counts", "Reviewer_Score"]]
 
-#remove copy Both Negative and Positive reviews into one collums and remove No Negative and No Positive statements
+#copy both Negative and Positive reviews into one collums and remove No Negative and No Positive statements
 dfStrippedReviews["Review"] = dfStrippedReviews["Negative_Review"].apply(lambda x: x.replace("No Negative", "")) + \
                               dfStrippedReviews["Positive_Review"].apply(lambda x: x.replace("No Positive", ""))
 
 dfReviewScore = dfStrippedReviews[["Review", "Reviewer_Score"]]
 
 #Score 5.5 means that there are ~8% negative(~40k). Score 5 means 6% negative(~30k). Do at max 8% split
-dfReviewScore["Is_Review_Negative"] = dfReviewScore['Reviewer_Score'].apply(lambda x: 0 if x > 5.5 else 1)
+dfReviewScore["label"] = dfReviewScore['Reviewer_Score'].apply(lambda x: 0 if x > 5.5 else 1)
 
 from sklearn.model_selection import train_test_split
 
 X = dfReviewScore["Review"]
-y = dfReviewScore["Is_Review_Negative"].rename("label")
+y = dfReviewScore["label"]
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20)
 
