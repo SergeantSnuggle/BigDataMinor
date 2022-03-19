@@ -1,7 +1,7 @@
 import pandas as pd
 import plotly.express as px
 
-dfimdb = pd.read_csv('IMDb movies.csv')
+dfimdb = pd.read_csv('BDSE\\week1\\imdb\\IMDb movies.csv')
 dfimdb
 
 #Nr1. Number of rows
