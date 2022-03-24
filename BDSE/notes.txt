@@ -59,7 +59,7 @@ Je kan ook de data splitten in 2 dataframes eentje positief en eentje negatief e
 Daarna kan je ze samenvoegen
 Je kan ook balanceren, dat je maar 10k per doet(10k positief en 10k negatief) en dan 2k test data
 
-Run randomtree met meerdere maxdepths(increment met 1) en print de resultaten in een plot voor het verslag
+Run randomtree met meerdere maxdepths(increment met 1, begin met 5 en stop bij 50) en print de resultaten in een plot voor het verslag
 Doe dan accuracy AUC en Con Mat en dan vergelijken met tijd. Hoe lang het duurde. Stop die resultaten in een dataframe
 Kijk naar elbows in graph
 
@@ -67,3 +67,10 @@ Silhoutte score zo hoog mogelijk
 
 TfIdf cijfer -> hoe hoger hoe vaker gebruikt.
 Gebruik ook dat countvectorizer met 2 woorden ding
+
+Kijkt het verschil tussen de resultaten van TfIdf en countvectorizer
+
+Ook nog even pickletjes gebruiken als mijn models compleet zijn, hoef ik het niet elke keer te runnen
+
+Screenshot van je sql querries in je verslag
+Verwijzingen er ook in, waar je informatie vandaan hebt
