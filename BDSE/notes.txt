@@ -74,3 +74,4 @@ Ook nog even pickletjes gebruiken als mijn models compleet zijn, hoef ik het nie
 
 Screenshot van je sql querries in je verslag
 Verwijzingen er ook in, waar je informatie vandaan hebt
+Code snippets er ook in
