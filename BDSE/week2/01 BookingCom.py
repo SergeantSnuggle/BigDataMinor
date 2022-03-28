@@ -26,7 +26,7 @@ for url in citiesUrls:
 
             accommodationsDF = pd.DataFrame(scrapedAccommodations, columns=['hotel_name', 'total_reviews'])
 
-        print("Total Accommodations Scraped: ",len(scrapedAccommodations))
+        print("Total Accommodations Scraped: ", len(scrapedAccommodations))
     else:
         print("Page doesn't respond")
 
