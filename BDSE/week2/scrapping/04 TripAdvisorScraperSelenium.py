@@ -20,15 +20,9 @@ num_page = 10
 
 url=  "https://www.tripadvisor.com/Hotel_Review-g188590-d190614-Reviews-InterContinental_Amstel_Amsterdam-Amsterdam_North_Holland_Province.html"
 
-
-driver = webdriver.Chrome(executable_path='E:\\Roy Dijkstra\\School\\BigData\\BDSE\\week2\\scrapping\\driver\\chromedriver.exe')
-
-
 from selenium.webdriver.chrome.options import Options
 options = Options()
 options.add_argument('--headless')
-options.add_argument('--no-sandbox')
-options.add_argument('--disable-dev-shm-usage')
 driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
 
