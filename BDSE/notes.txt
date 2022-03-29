@@ -79,3 +79,4 @@ Code snippets er ook in
 additional stopwords met en zonder ook in verslag, het verschil in wordcloud
 
 Dinsdag: data cleaning + model training
+Chrome niet in admin uitvoeren anders krijg je error met chromedriver

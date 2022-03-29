@@ -1,6 +1,6 @@
 import pandas as pd 
 
-winedf = pd.read_csv('winequality-red.csv',sep=';')
+winedf = pd.read_csv('winequality-red.csv', sep=',')
 # print winedf.isnull().sum() # check for missing data
 print (winedf.head(3))
 
@@ -52,3 +52,5 @@ grid.fit(X_train, y_train) # will take some time: a few minutes
 
 print ("score = %3.2f" %(grid.score(X_test,y_test)))
 print (grid.best_params_)
+
+resultsdf = pd.DataFrame(grid.cv_results_)
