@@ -1,7 +1,7 @@
 import pandas as pd
 
-dfReviews = pd.read_csv("BDSE\\Individual Assignment 1\\Hotel_Reviews.csv")
-dfReviews = pd.read_csv("Individual Assignment 1\\Hotel_Reviews.csv")
+dfReviews = pd.read_csv("Hotel_Reviews.csv")
+#dfReviews = pd.read_csv("Individual Assignment 1\\Hotel_Reviews.csv")
 dfReviews.info()
 
 dfStrippedReviews = dfReviews[["Hotel_Name", "Negative_Review", "Review_Total_Negative_Word_Counts", "Positive_Review",

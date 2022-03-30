@@ -80,3 +80,9 @@ additional stopwords met en zonder ook in verslag, het verschil in wordcloud
 
 Dinsdag: data cleaning + model training
 Chrome niet in admin uitvoeren anders krijg je error met chromedriver
+
+sources: https://stackoverflow.com/questions/54608088/what-is-gridsearch-cv-results-could-any-explain-all-the-things-in-that-i-e-me
+
+SELECT * FROM label_kaggle_reviews where label = 0 ORDER BY negative_word_count DESC, positive_word_count ASC LIMIT 10000;
+
+SELECT * FROM label_kaggle_reviews where label = 1 ORDER BY negative_word_count ASC, positive_word_count DESC LIMIT 10000
