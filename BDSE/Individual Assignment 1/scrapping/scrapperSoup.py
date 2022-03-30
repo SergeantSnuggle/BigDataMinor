@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import requests
 import pandas as pd
 
-def soup_scrapper_tui():
+def soup_scrapper_tui(test1, test2, test3):
     base_url = 'https://www.tui.nl/'
     hotel_url = 'papagayo-beach-hotel-509479326'
     section_url = ('/#beoordelingen')

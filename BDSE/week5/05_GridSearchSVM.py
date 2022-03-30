@@ -34,7 +34,7 @@ from sklearn.model_selection  import GridSearchCV
 
 sc = StandardScaler()
 model = SVC()
-pipeline = Pipeline(steps=[('sc', sc),('svc', model)])
+pipeline = Pipeline(steps=[('sc', sc), ('svc', model)])
 
 parameters =  [{
                     'svc__C': [0.001, 0.01, 0.05, 0.1, 0.5, 1.0, 10.0],
@@ -50,7 +50,7 @@ grid = GridSearchCV(pipeline, param_grid=parameters, cv=5)
 
 grid.fit(X_train, y_train) # will take some time: a few minutes
 
-print ("score = %3.2f" %(grid.score(X_test,y_test)))
-print (grid.best_params_)
+print("score = %3.2f" %(grid.score(X_test,y_test)))
+print(grid.best_params_)
 
 resultsdf = pd.DataFrame(grid.cv_results_)

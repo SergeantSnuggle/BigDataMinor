@@ -31,4 +31,3 @@ scrappedReviews = scrapperSelenium.selenium_scrapper_tripadvisor(link, 20)
 db.insert_df_into_db(scrappedReviews, "scrappedrawhoteldata")
 
 df2 =db.retrieve_table_into_df("scrappedrawhoteldata")
-

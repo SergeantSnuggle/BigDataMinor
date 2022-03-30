@@ -12,6 +12,7 @@ from selenium.webdriver.chrome.options import Options
 options = Options()
 options.add_argument('--headless')
 
+
 def selenium_scrapper_tripadvisor(link, numberOfPages):
     """
     A function to scrape data from a tripadvisor hotel review site.
@@ -58,3 +59,4 @@ def selenium_scrapper_tripadvisor(link, numberOfPages):
     scrapedReviews["label"] = scrapedReviews['rating'].astype(float).apply(lambda x: 1 if x > 30 else 0)
 
     return scrapedReviews
+
