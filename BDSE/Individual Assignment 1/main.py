@@ -22,8 +22,8 @@ import textCleaning as tc
 #
 # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20)
 #
-# stemmedTrain = tc.get_stemmed_text(X_train)
-# stemmedTest = tc.get_stemmed_text(X_test)
+# stemmedTrain = tc.stem_text(X_train)
+# stemmedTest = tc.stem_text(X_test)
 #db.insert_df_into_db(dfLabelReviews, "label_kaggle_reviews", "replace")
 
 # db.insert_df_into_db(dfReviews, "rawhoteldata", "replace")

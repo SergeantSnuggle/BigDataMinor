@@ -2,7 +2,11 @@ import pandas as pd
 import re
 from nltk.stem.porter import PorterStemmer
 from nltk.corpus import stopwords
-
+from nltk import WordNetLemmatizer
+import nltk
+nltk.download('wordnet')
+nltk.download('stopwords')
+nltk.download('omw-1.4')
 
 
 def kaggle_strip_reviews(dfReviews):
@@ -25,6 +29,7 @@ def kaggle_label_data(dfReviews):
 
     return dfReviewScore
 
+
 def preprocess_review(reviews):
     REPLACE_NO_SPACE = re.compile("(\.)|(\;)|(\:)|(\!)|(\?)|(\,)|(\")|(\()|(\))|(\[)|(\])|(\d+)")
     REPLACE_WITH_SPACE = re.compile("(<br\s*/><br\s*/>)|(\-)|(\/)")
@@ -37,11 +42,11 @@ def preprocess_review(reviews):
     return reviews
 
 
-def remove_stop_words(corpus):
+def remove_stop_words(reviews):
     english_stop_words = stopwords.words('english')
     removed_stop_words = []
     addition_stop_words = ['hotel', 'room', 'breakfast', 'staff', 'rooms', 'location', 'u']
-    for review in corpus:
+    for review in reviews:
         removed_stop_words.append(
             ' '.join([word for word in review.split()
                       if (word not in english_stop_words) and (word not in addition_stop_words)])
@@ -50,6 +55,11 @@ def remove_stop_words(corpus):
     return removed_stop_words
 
 
-def get_stemmed_text(reviews):
+def stem_text(reviews):
     stemmer = PorterStemmer()
     return [' '.join([stemmer.stem(word) for word in review.split()]) for review in reviews]
+
+
+def lem_text(reviews):
+    lemmatizer = WordNetLemmatizer()
+    return [' '.join([lemmatizer.lemmatize(word) for word in review.split()]) for review in reviews]
