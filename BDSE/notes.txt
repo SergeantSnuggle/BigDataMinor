@@ -88,3 +88,5 @@ SELECT * FROM label_kaggle_reviews where label = 0 ORDER BY negative_word_count 
 SELECT * FROM label_kaggle_reviews where label = 1 ORDER BY negative_word_count ASC, positive_word_count DESC LIMIT 10000
 
 Time cleaning data 282.41862750053406 seconds
+
+Resultaten tussen gecleande en niet gecleande data. Daar kan de tijd verschillen omdat ik bezig was met andere dingen in de achtergrond

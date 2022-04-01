@@ -1,0 +1,17 @@
+DELIMITER //
+CREATE PROCEDURE SelectTopReviews(IN limitValue int, IN label int)
+BEGIN
+    DECLARE limValue int;
+    SET limValue = limitValue;
+    SET Label = label;
+    SELECT * FROM cleanedhoteldata WHERE cleanedhoteldata.label = Label
+    ORDER BY
+        CASE WHEN Label = 0 THEN cleanedhoteldata.negative_word_count END DESC,
+        CASE WHEN label = 1 THEN cleanedhoteldata.positive_word_count END DESC
+    LIMIT limValue;
+END //
+
+
+CALL SelectTopReviews(10000, 1);
+
+DROP PROCEDURE SelectTopReviews;

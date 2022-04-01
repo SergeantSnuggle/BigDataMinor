@@ -35,12 +35,12 @@ import textCleaning as tc
 #
 # df2 =db.retrieve_table_into_df("scrappedrawhoteldata")
 
-dfNegative = pd.read_csv("negative_hotel_reviews10k.csv")
-dfPositive = pd.read_csv("positive_hotel_reviews10k.csv")
+dfNegative = pd.read_csv("negative_hotel_reviews10k_cleaned.csv")
+dfPositive = pd.read_csv("positive_hotel_reviews10k_cleaned.csv")
 dfReviews = pd.concat([dfNegative, dfPositive], ignore_index=True)
 
 dfShuffled = dfReviews.sample(frac=1)
-X = dfShuffled["Review"]
+X = dfShuffled["lemReviews"]
 y = dfShuffled["label"]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20)
 
@@ -93,12 +93,5 @@ print("Accuracy: {:.2f}%".format(accuracy_score(y_test, y_pred) * 100))
 print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
 print("AUC: \n", roc_auc_score(y_test, y_prob))
 
-"""
-Dit even morgen vragen hoe het beter kan. Voor nu doe ik het gewoon zo dat ik die twee dataframes samenvoeg
-X_negative = dfNegative["Review"]
-X_positive = dfPositive["Review"]
-y_negative = dfNegative["label"]
-y_positive = dfPositive["label"]
-X_negative_train, X_negative_test, y_negative_train, y_negative_test = train_test_split(X_negative, y_negative, test_size=0.20)
-X_positive_train, X_positive_test, y_positive_train, y_positive_test = train_test_split(X_positive, y_negative, test_size=0.20)
-"""
+resultsDf = pd.DataFrame(rf_random.cv_results_)
+resultsDf.to_csv =('randomTreeResultsCleaned.csv')

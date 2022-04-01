@@ -25,3 +25,6 @@ def retrieve_table_into_df(table):
     df = pd.read_sql("SELECT * FROM "+table, con=engine)
     return df
 
+query = "CALL SelectTopReviews(10000, 1);"
+df = pd.read_sql_query(query, engine)
+
