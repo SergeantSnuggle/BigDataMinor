@@ -1,6 +1,6 @@
 import pandas as pd
 
-dfReviews = pd.read_csv("Hotel_Reviews.csv")
+dfReviews = pd.read_csv("data/Hotel_Reviews.csv")
 #dfReviews = pd.read_csv("Individual Assignment 1\\Hotel_Reviews.csv")
 dfReviews.info()
 

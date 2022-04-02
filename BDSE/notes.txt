@@ -91,43 +91,64 @@ Time cleaning data 282.41862750053406 seconds
 
 Resultaten tussen gecleande en niet gecleande data. Daar kan de tijd verschillen omdat ik bezig was met andere dingen in de achtergrond
 
-[CV] END bootstrap=True, criterion=entropy, max_depth=200, min_samples_leaf=2, min_samples_split=2, n_estimators=2171; total time=17.4min
-[CV] END bootstrap=True, criterion=entropy, max_depth=200, min_samples_leaf=2, min_samples_split=2, n_estimators=2171; total time=17.5min
-[CV] END bootstrap=True, criterion=entropy, max_depth=200, min_samples_leaf=2, min_samples_split=2, n_estimators=2171; total time=17.6min
-[CV] END bootstrap=True, criterion=entropy, max_depth=200, min_samples_leaf=2, min_samples_split=2, n_estimators=2171; total time=17.6min
-[CV] END bootstrap=True, criterion=gini, max_depth=10, min_samples_leaf=1, min_samples_split=2, n_estimators=1135; total time= 1.5min
-[CV] END bootstrap=True, criterion=gini, max_depth=10, min_samples_leaf=1, min_samples_split=2, n_estimators=1135; total time= 1.5min
-[CV] END bootstrap=True, criterion=gini, max_depth=10, min_samples_leaf=1, min_samples_split=2, n_estimators=1135; total time= 1.5min
-[CV] END bootstrap=True, criterion=gini, max_depth=10, min_samples_leaf=1, min_samples_split=2, n_estimators=1135; total time= 1.5min
-[CV] END bootstrap=True, criterion=gini, max_depth=10, min_samples_leaf=1, min_samples_split=2, n_estimators=1135; total time= 1.5min
-[CV] END bootstrap=True, criterion=entropy, max_depth=20, min_samples_leaf=4, min_samples_split=5, n_estimators=1135; total time= 2.5min
-[CV] END bootstrap=True, criterion=entropy, max_depth=20, min_samples_leaf=4, min_samples_split=5, n_estimators=1135; total time= 2.5min
-[CV] END bootstrap=True, criterion=entropy, max_depth=20, min_samples_leaf=4, min_samples_split=5, n_estimators=1135; total time= 2.5min
-[CV] END bootstrap=True, criterion=entropy, max_depth=20, min_samples_leaf=4, min_samples_split=5, n_estimators=1135; total time= 2.5min
-[CV] END bootstrap=True, criterion=entropy, max_depth=20, min_samples_leaf=4, min_samples_split=5, n_estimators=1135; total time= 2.4min
-[CV] END bootstrap=True, criterion=entropy, max_depth=200, min_samples_leaf=2, min_samples_split=2, n_estimators=2171; total time=16.7min
-[CV] END bootstrap=False, criterion=entropy, max_depth=50, min_samples_leaf=4, min_samples_split=20, n_estimators=1757; total time=11.4min
-[CV] END bootstrap=False, criterion=entropy, max_depth=50, min_samples_leaf=4, min_samples_split=20, n_estimators=1757; total time=11.4min
-[CV] END bootstrap=True, criterion=entropy, max_depth=20, min_samples_leaf=2, min_samples_split=10, n_estimators=307; total time=  43.7s
-[CV] END bootstrap=False, criterion=entropy, max_depth=50, min_samples_leaf=4, min_samples_split=20, n_estimators=1757; total time=11.4min
-[CV] END bootstrap=True, criterion=entropy, max_depth=20, min_samples_leaf=2, min_samples_split=10, n_estimators=307; total time=  44.1s
-[CV] END bootstrap=True, criterion=entropy, max_depth=20, min_samples_leaf=2, min_samples_split=10, n_estimators=307; total time=  43.6s
-[CV] END bootstrap=True, criterion=entropy, max_depth=20, min_samples_leaf=2, min_samples_split=10, n_estimators=307; total time=  43.8s
-[CV] END bootstrap=True, criterion=entropy, max_depth=20, min_samples_leaf=2, min_samples_split=10, n_estimators=307; total time=  43.3s
-[CV] END bootstrap=False, criterion=entropy, max_depth=5, min_samples_leaf=2, min_samples_split=30, n_estimators=1964; total time= 1.9min
-[CV] END bootstrap=False, criterion=entropy, max_depth=5, min_samples_leaf=2, min_samples_split=30, n_estimators=1964; total time= 1.9min
-[CV] END bootstrap=False, criterion=entropy, max_depth=5, min_samples_leaf=2, min_samples_split=30, n_estimators=1964; total time= 1.9min
-[CV] END bootstrap=False, criterion=entropy, max_depth=5, min_samples_leaf=2, min_samples_split=30, n_estimators=1964; total time= 1.9min
-[CV] END bootstrap=False, criterion=entropy, max_depth=5, min_samples_leaf=2, min_samples_split=30, n_estimators=1964; total time= 1.9min
-[CV] END bootstrap=False, criterion=entropy, max_depth=50, min_samples_leaf=4, min_samples_split=20, n_estimators=1757; total time=11.5min
-[CV] END bootstrap=False, criterion=entropy, max_depth=50, min_samples_leaf=4, min_samples_split=20, n_estimators=1757; total time=11.3min
-[CV] END bootstrap=False, criterion=gini, max_depth=200, min_samples_leaf=4, min_samples_split=10, n_estimators=928; total time= 8.0min
-[CV] END bootstrap=False, criterion=gini, max_depth=200, min_samples_leaf=4, min_samples_split=10, n_estimators=928; total time= 7.9min
-[CV] END bootstrap=False, criterion=gini, max_depth=200, min_samples_leaf=4, min_samples_split=10, n_estimators=928; total time= 8.0min
-[CV] END bootstrap=False, criterion=gini, max_depth=200, min_samples_leaf=4, min_samples_split=10, n_estimators=928; total time= 8.0min
-[CV] END bootstrap=True, criterion=entropy, max_depth=50, min_samples_leaf=3, min_samples_split=15, n_estimators=928; total time= 4.1min
-[CV] END bootstrap=True, criterion=entropy, max_depth=50, min_samples_leaf=3, min_samples_split=15, n_estimators=928; total time= 4.2min
-[CV] END bootstrap=True, criterion=entropy, max_depth=50, min_samples_leaf=3, min_samples_split=15, n_estimators=928; total time= 4.3min
-[CV] END bootstrap=False, criterion=gini, max_depth=200, min_samples_leaf=4, min_samples_split=10, n_estimators=928; total time= 8.1min
-
 Zag dat met probability: True het veel langer doet(omdat het moet crosschecken) Dus met SVM.svc randomsearch niet gedaan om het te versnellen
+
+svm is slecht scalebaar met 20k duurde het niet heel lang. Maar met >500k duurt het tering lang, nu al meer dan 2,5 uur bezig toen ik stopte
+svm = O(N3)
+
+Naive Bayes classifier for multivariate Bernoulli models. Like MultinomialNB, this classifier is suitable for discrete data.
+The difference is that while MultinomialNB works with occurrence counts, BernoulliNB is designed for binary/boolean features.
+
+The categorical Naive Bayes classifier is suitable for classification with discrete features that are categorically distributed.
+The categories of each feature are drawn from a categorical distribution.
+
+CountVector
+True:
+Accuracy: 90.32%
+Confusion Matrix:
+ [[ 4290  3936]
+ [ 6050 88876]]
+AUC:
+ 0.8826640034330503
+
+False:
+Accuracy: 80.38%
+Confusion Matrix:
+ [[ 6545  1603]
+ [18639 76365]]
+AUC:
+ 0.883117084525723
+
+TfIdf
+True:
+Accuracy: 92.93%
+Confusion Matrix:
+ [[ 1110  6898]
+ [  393 94751]]
+AUC:
+ 0.8935097913889274
+
+False:
+Accuracy: 89.50%
+Confusion Matrix:
+ [[ 5036  3211]
+ [ 7621 87284]]
+AUC:
+ 0.8958190287445582
+
+LR:
+liblinear:
+Accuracy: 92.81%
+Confusion Matrix:
+ [[ 2847  5198]
+ [ 2219 92888]]
+AUC:
+ 0.8933195396166365
+
+lbfgs:
+Accuracy: 92.63%
+Confusion Matrix:
+ [[ 3390  4655]
+ [ 2952 92155]]
+AUC:
+ 0.8956179171929104

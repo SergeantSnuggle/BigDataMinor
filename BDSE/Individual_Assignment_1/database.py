@@ -1,5 +1,5 @@
 import pandas as pd
-from sqlalchemy import create_engine, inspect
+from sqlalchemy import create_engine
 
 engine = create_engine('mysql://root@localhost:3306/hotel_reviews')
 
