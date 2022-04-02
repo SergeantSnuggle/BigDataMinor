@@ -30,6 +30,14 @@ def kaggle_label_data(dfReviews):
     return dfReviewScore
 
 
+def own_label_data(dfReviews):
+    dfReviewLabel = pd.DataFrame()
+    dfReviewLabel["Review"] = dfReviews[['review']]
+    dfReviewLabel["label"] = dfReviews['review_score'].apply(lambda x: 1 if x > 5.5 else 0)
+
+    return dfReviewLabel
+
+
 def preprocess_review(reviews):
     REPLACE_NO_SPACE = re.compile("(\.)|(\;)|(\:)|(\!)|(\?)|(\,)|(\")|(\()|(\))|(\[)|(\])|(\d+)")
     REPLACE_WITH_SPACE = re.compile("(<br\s*/><br\s*/>)|(\-)|(\/)")
@@ -63,3 +71,12 @@ def stem_text(reviews):
 def lem_text(reviews):
     lemmatizer = WordNetLemmatizer()
     return [' '.join([lemmatizer.lemmatize(word) for word in review.split()]) for review in reviews]
+
+
+def clean_data(dfReviews):
+    dfReviews['processedReviews'] = preprocess_review(dfReviews['Review'])
+    dfReviews['stopwordsReviews'] = remove_stop_words(dfReviews['processedReviews'])
+    dfReviews['stemmedReviews'] = stem_text(dfReviews['stopwordsReviews'])
+    dfReviews['lemReviews'] = lem_text(dfReviews['stemmedReviews'])
+
+    return dfReviews

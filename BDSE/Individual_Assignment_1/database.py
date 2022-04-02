@@ -3,6 +3,7 @@ from sqlalchemy import create_engine, inspect
 
 engine = create_engine('mysql://root@localhost:3306/hotel_reviews')
 
+
 def insert_df_into_db(df, table, if_exists='append'):
     """
     Insert a dataframe into the database hotel_reviews
@@ -25,6 +26,15 @@ def retrieve_table_into_df(table):
     df = pd.read_sql("SELECT * FROM "+table, con=engine)
     return df
 
-query = "CALL SelectTopReviews(10000, 1);"
-df = pd.read_sql_query(query, engine)
 
+def get_top_reviews(limit, label):
+    """
+
+    :param limit: Amount of reviews you want
+    :param label: 0 for negative reviews, 1 for positive reviews
+    :return:
+    """
+    query = "CALL SelectTopReviews({}, {});".format(limit, label)
+    df = pd.read_sql_query(query, engine)
+
+    return df
