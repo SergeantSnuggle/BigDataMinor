@@ -11,10 +11,15 @@ nltk.download('omw-1.4')
 
 
 def kaggle_strip_reviews(dfReviews):
+    """
+    Strip the kaggle dataset of all irrelevant data. Returns stripped data
+    :param dfReviews: the kaggle dataframe that needs to be scrapped
+    :return: returns the stripped dataframe
+    """
     dfStrippedReviews = dfReviews[["Hotel_Name", "Review_Total_Negative_Word_Counts",
                                    "Review_Total_Positive_Word_Counts", "Reviewer_Score"]]
 
-    # copy both Negative and Positive reviews into one collums and remove No Negative and No Positive statements
+    # Copy both Negative and Positive reviews into one column and remove No Negative and No Positive statements
     dfStrippedReviews["Review"] = dfReviews["Negative_Review"].apply(lambda x: x.replace("No Negative", "")) + \
                                   dfReviews["Positive_Review"].apply(lambda x: x.replace("No Positive", ""))
     return dfStrippedReviews
@@ -25,7 +30,7 @@ def kaggle_label_data(dfReviews):
     dfReviewScore = dfReviewScore.rename(columns={"Review_Total_Negative_Word_Counts": "negative_word_count",
                                                   "Review_Total_Positive_Word_Counts": "positive_word_count"})
 
-    # Score 5.5 means that there are ~8% negative(~40k). Score 5 means 6% negative(~30k). Do at max 8% split
+    # Score 5.5 means that there are ~8% negative(~40k). Score 5 means 6% negative(~30k).
     dfReviewScore["label"] = dfReviews['Reviewer_Score'].apply(lambda x: 1 if x > 5.5 else 0)
 
     return dfReviewScore

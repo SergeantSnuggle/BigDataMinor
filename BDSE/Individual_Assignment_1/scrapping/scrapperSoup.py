@@ -1,48 +1,45 @@
+import re
 from urllib.parse import quote
 
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
 
-def soup_scrapper_tui(test1, test2, test3):
-    base_url = 'https://www.tui.nl/'
-    hotel_url = 'papagayo-beach-hotel-509479326'
-    section_url = ('/#beoordelingen')
 
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; nl; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7',
-        'Accept-Language': 'nl-NE'
-    }
+def get_hotel_review(hotel_review):
 
-    website_url = base_url + hotel_url
+    review = str(hotel_review)
+    review = review.replace("\n", " ")
+    review = review.strip('[ ]')
+    sep = 'Stayed'
+    stripped = review.split(sep, 1)[0]
 
-    page = requests.get(website_url)
+    return stripped
+
+
+def get_hotel_rating(rating):
+    rating = rating.replace('\n', '')
+
+    return float(rating)
+
+
+def soup_scrapper_booking(url: str, num_of_reviews=20):
+    review_list = []
+    rating_list = []
+
+    page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
 
-    # Retrieve number of review pages
-    page_amount = int(soup.find('li', class_='last').get_text())
+    for x in range(num_of_reviews):
+        review = get_hotel_review(soup.findAll("div", class_="review_item_review_content")[x].get_text())
+        rating = get_hotel_rating(soup.findAll("span", class_="review-score-badge")[x + 1].get_text())
 
-    review_list = []
-    # loop trough every page
-    for page_number in range(1, (page_amount+1)):
+        review_list.append(review)
+        rating_list.append(rating)
 
-        # set url for next page
-        page_url = base_url + hotel_url + section_url + str(page_number)
+    df = pd.DataFrame(list(zip(rating_list, review_list)),
+                      columns=['reviewer_score',  'review'])
+    return df
 
-        try:
-            page_url = requests.get(page_url)
-            page_url.raise_for_status()
-        except requests.exceptions.HTTPError as err:
-            raise SystemExit(err)
 
-        soup = BeautifulSoup(page_url.content, 'lxml')
-
-        page_reviews = soup.find_all('article', itemprop='review')
-
-        for review_index, review in enumerate(page_reviews):
-
-            reviewscore = review.find('span', itemprop='ratingValue').get_text()
-            reviewtext = review.find('p', itemprop='reviewBody').get_text()
-            review_list.append([reviewtext, int(reviewscore)])
-
-            reviewDf = pd.DataFrame(review_list, columns=["reviewtext", "reviewscore"])
+df = soup_scrapper_booking("https://www.booking.com/reviews/nl/hotel/westcord-city-centre.en-gb.html?page=2")

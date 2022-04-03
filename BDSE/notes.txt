@@ -102,6 +102,7 @@ The difference is that while MultinomialNB works with occurrence counts, Bernoul
 The categorical Naive Bayes classifier is suitable for classification with discrete features that are categorically distributed.
 The categories of each feature are drawn from a categorical distribution.
 
+MultiNB
 CountVector
 True:
 Accuracy: 90.32%

@@ -4,13 +4,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 import plotly.express as px
 
-dname = os.getcwd()
-os.chdir(dname)
-#Use this to run in terminal
-full_path = os.path.realpath('chickweight.csv')
+# dname = os.getcwd()
+# os.chdir(dname)
+# #Use this to run in terminal
+# full_path = os.path.realpath('chickweight.csv')
 #Use this to run in python console
 full_path = os.path.realpath('chicken\\chickweight.csv')
-dfChickens = pd.read_csv(full_path)
+dfChickens = pd.read_csv('chickweight.csv')
 
 # 1. select columns
 chickensDiet = dfChickens[['weight', 'diet']]

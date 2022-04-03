@@ -53,7 +53,7 @@ def selenium_scrapper_tripadvisor(link, numberOfPages):
         #Go to the next review page
         driver.find_element(by=By.XPATH, value='.//a[@class="ui_button nav next primary "]').click()
 
-    scrapedReviews = pd.DataFrame(scrapedReviews, columns=['hotelname', 'title', 'Review', 'rating'])
+    scrapedReviews = pd.DataFrame(scrapedReviews, columns=['Hotel_Name', 'Title', 'Review', 'rating'])
     driver.quit()
     print('Scrapping done, adding labels')
     scrapedReviews["label"] = scrapedReviews['rating'].astype(float).apply(lambda x: 1 if x > 30 else 0)

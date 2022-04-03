@@ -24,3 +24,16 @@ def get_build_data():
 
     return X_train, X_test, y_train, y_test
 
+
+def get_raw_data():
+    dfKaggleReviews = pd.read_csv("data/Hotel_Reviews.csv")
+    dfScrappedSelenium = pd.read_csv("data/scrappedrawtriphoteldata.csv")
+    dfOwnReviews = pd.read_csv("data/own_reviews.csv")
+
+    dfKaggleReviews["label"] = dfKaggleReviews['Reviewer_Score'].apply(lambda x: 1 if x > 5.5 else 0)
+    dfOwnReviews["label"] = dfOwnReviews['review_score'].apply(lambda x: 1 if x > 5.5 else 0)
+
+    dfReviews = pd.concat([dfKaggleReviews, dfScrappedSelenium, dfOwnReviews], ignore_index=True)
+    dfReviews = dfReviews.sample(frac=1).reset_index(drop=True)
+
+    return dfReviews
