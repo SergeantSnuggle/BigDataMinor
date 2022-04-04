@@ -24,15 +24,14 @@ def selenium_scrapper_tripadvisor(link, numberOfPages):
     """
     driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
     driver.get(link)
+    # Accept the cookies message
     WebDriverWait(driver, 15).until(
         EC.element_to_be_clickable((By.XPATH, '//button[contains(text(), "Accept")]'))).click()
-
     scrapedReviews = []
 
-    # change the value inside the range to save more or less reviews
+    # Change the value inside the range to save more or less reviews
     for i in range(0, numberOfPages):
-
-        # expand the review
+        # Expand the review
         time.sleep(2)
 
         container = driver.find_elements(by=By.XPATH, value="//div[@data-reviewid]")
@@ -50,7 +49,7 @@ def selenium_scrapper_tripadvisor(link, numberOfPages):
 
             scrapedReviews.append([hotelname, title, review, rating])
 
-        #Go to the next review page
+        # Go to the next review page
         driver.find_element(by=By.XPATH, value='.//a[@class="ui_button nav next primary "]').click()
 
     scrapedReviews = pd.DataFrame(scrapedReviews, columns=['Hotel_Name', 'Title', 'Review', 'rating'])

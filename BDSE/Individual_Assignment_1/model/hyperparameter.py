@@ -68,7 +68,7 @@ def hyper_random():
     rf_base = RandomForestClassifier()
     rf_random = RandomizedSearchCV(estimator=rf_base,
                                    param_distributions=random_grid,
-                                   n_iter=1,
+                                   n_iter=30,
                                    cv=5,
                                    verbose=2,
                                    random_state=42,

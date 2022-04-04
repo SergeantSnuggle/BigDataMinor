@@ -16,11 +16,13 @@ def create_wordcloud(reviews):
     plt.figure()
     plt.imshow(wordCloudPos, interpolation='bilinear')
     plt.axis('off')
+    plt.savefig("wordcloud/Pos")
     plt.show()
 
     plt.figure()
     plt.imshow(wordCloudNeg, interpolation='bilinear')
     plt.axis('off')
+    plt.savefig("wordcloud/Neg")
     plt.show()
 
     stopwords = set(STOPWORDS)
@@ -32,11 +34,13 @@ def create_wordcloud(reviews):
     plt.figure()
     plt.imshow(wordCloudPosStop, interpolation='bilinear')
     plt.axis('off')
+    plt.savefig("wordcloud/PosStop")
     plt.show()
 
     plt.figure()
     plt.imshow(wordCloudNegStop, interpolation='bilinear')
     plt.axis('off')
+    plt.savefig("wordcloud/NegStop")
     plt.show()
 
     stopwords.update(['hotel', 'room', 'breakfast', 'staff', 'rooms', 'location', 'u'])
@@ -48,12 +52,15 @@ def create_wordcloud(reviews):
     plt.figure()
     plt.imshow(wordCloudPosStopUpdate, interpolation='bilinear')
     plt.axis('off')
+    plt.savefig("wordcloud/PosStopUpdate")
     plt.show()
 
     plt.figure()
     plt.imshow(wordCloudNegStopUpdate, interpolation='bilinear')
     plt.axis('off')
+    plt.savefig("wordcloud/NegStopUpdate")
     plt.show()
+
 
 reviews = db.retrieve_table_into_df("cleanedhoteldata")
 create_wordcloud(reviews)
