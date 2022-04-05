@@ -5,6 +5,7 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix,  roc_auc_score
 import pandas as pd
+import pickle
 from BDSE.Individual_Assignment_1.buildData import get_build_data
 
 
@@ -47,6 +48,7 @@ def build_mnb():
     print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
     print("AUC: \n", roc_auc_score(y_test, y_prob))
 
+    pickle.dump(vect, open("saved/mnbvect.sav", 'wb'))
     return mnb
 
 
@@ -58,11 +60,11 @@ def build_random():
     X_train_vect = vect.fit_transform(X_train)
     X_test_vect = vect.transform(X_test)
 
-    randomForest = RandomForestClassifier(n_estimators=721,
+    randomForest = RandomForestClassifier(n_estimators=100,
                                           min_samples_split=2,
-                                          min_samples_leaf=4,
-                                          max_depth=75,
-                                          criterion="gini",
+                                          min_samples_leaf=2,
+                                          max_depth=100,
+                                          criterion="entropy",
                                           bootstrap=True,
                                           n_jobs=4)
     randomForest.fit(X_train_vect, y_train)
@@ -84,7 +86,7 @@ def build_lr():
     X_train_vect = vect.fit_transform(X_train)
     X_test_vect = vect.transform(X_test)
 
-    lr = LogisticRegression(solver='newton-cg', penalty='l2', C=100)
+    lr = LogisticRegression(solver='liblinear', penalty='l2', C=100)
 
     lr.fit(X_train_vect, y_train)
 
@@ -95,4 +97,7 @@ def build_lr():
     print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
     print("AUC: \n", roc_auc_score(y_test, y_prob))
 
+    pickle.dump(vect, open("saved/lrvect.sav", 'wb'))
     return lr
+
+build_lr()

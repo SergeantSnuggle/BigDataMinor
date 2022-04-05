@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-import database as db
+import BDSE.Individual_Assignment_1.database as db
 
 
 def get_hyper_data():
