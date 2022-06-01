@@ -1,1 +1,8 @@
 Gebruik python 3.8
+lemming is niet meer nodig als je stemming doet
+sigmoid is binary classification
+Als de lijnen in een graaf ongeveer gelijk omhoog gaan zit er geen overfitting in je model
+GEbruik niet 55% als split tussen pos en neg. Doe iets van 7(want ik vind zelf een hotel minimaal een 7 moet hebben)
+Ja kan ook wordclouds gebruiken als check(met stopwords eruit gehaald)Dus komt bad nog voor in de pos wordcloud(vind de leraar leuk)
+Model klein houden tegen overfit
+Doe hyperparameters met keras en al die andere dingen
