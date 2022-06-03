@@ -6,3 +6,6 @@ GEbruik niet 55% als split tussen pos en neg. Doe iets van 7(want ik vind zelf e
 Ja kan ook wordclouds gebruiken als check(met stopwords eruit gehaald)Dus komt bad nog voor in de pos wordcloud(vind de leraar leuk)
 Model klein houden tegen overfit
 Doe hyperparameters met keras en al die andere dingen
+
+DataFrame.copy()
+https://www.kaggle.com/code/faizanurrahmann/sentiment-analysis-of-reveiws
