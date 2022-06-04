@@ -4,6 +4,7 @@ from nltk.stem.porter import PorterStemmer
 from nltk.corpus import stopwords
 from nltk import WordNetLemmatizer
 import nltk
+import numpy as np
 
 nltk.download('wordnet')
 nltk.download('stopwords')
@@ -84,5 +85,15 @@ def clean_data(dfReviews):
     dfReviews['stopwordsReviews'] = remove_stop_words(dfReviews['processedReviews'])
     dfReviews['stemmedReviews'] = stem_text(dfReviews['stopwordsReviews'])
     dfReviews['lemReviews'] = lem_text(dfReviews['stemmedReviews'])
+
+    return dfReviews
+
+
+def clean_hotel_data(dfReviews):
+    dfReviews = dfReviews[['Review', 'label']]
+    dfReviews = dfReviews.dropna()
+    dfReviews = clean_data(dfReviews)
+    dfReviews = dfReviews.replace(r'^\s*$', np.nan, regex=True)
+    dfReviews = dfReviews.dropna()
 
     return dfReviews

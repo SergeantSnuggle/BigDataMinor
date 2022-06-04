@@ -99,5 +99,3 @@ def build_lr():
 
     pickle.dump(vect, open("saved/lrvect.sav", 'wb'))
     return lr
-
-build_lr()
