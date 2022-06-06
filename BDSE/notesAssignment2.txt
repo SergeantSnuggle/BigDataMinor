@@ -9,3 +9,8 @@ Doe hyperparameters met keras en al die andere dingen
 
 DataFrame.copy()
 https://www.kaggle.com/code/faizanurrahmann/sentiment-analysis-of-reveiws
+
+Dashboard:
+Een rij met cijfer, zoals hoeveel reviews, hoeveel pos/neg, score van modelen?, hoeveel hotels, hoeveel per land(afkomst) en hoeveel per stad, hoeveel hotels
+
+ToDo: Maak een aparte database met alle hotels erin(met locatie en average score) voor de main map
