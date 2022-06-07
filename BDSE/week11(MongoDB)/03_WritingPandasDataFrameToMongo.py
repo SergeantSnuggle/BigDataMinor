@@ -8,6 +8,6 @@ client = MongoClient("localhost:27017")
 
 # Already existing database zipcode
 
-db=client.zipcode
+db = client.zipcode
 
 db.population.insert_many(df.to_dict('records'))
