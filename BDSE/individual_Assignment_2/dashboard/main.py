@@ -66,12 +66,12 @@ app.layout = html.Div([dcc.Location(id="url", refresh=False), navbar, sidebar, c
 
 
 @callback(Output('page-content', 'children'),
-              Input('url', 'pathname'))
+          Input('url', 'pathname'))
 def display_page(pathname):
     if pathname == '/home' or pathname == '/':
-         return home
+        return home
     elif pathname == '/models':
-         return hotels_map
+        return hotels_map
     else:
         return '404'
 

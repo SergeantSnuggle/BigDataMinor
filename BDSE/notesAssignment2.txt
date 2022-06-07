@@ -14,3 +14,5 @@ Dashboard:
 Een rij met cijfer, zoals hoeveel reviews, hoeveel pos/neg, score van modelen?, hoeveel hotels, hoeveel per land(afkomst) en hoeveel per stad, hoeveel hotels
 
 ToDo: Maak een aparte database met alle hotels erin(met locatie en average score) voor de main map
+
+reviews splitten in positief en negatief (van alle reviews) niet gebasseerd op cijfer(als er meer dan 5 woorden in de negatieve review staan)
