@@ -1,36 +1,29 @@
-import dash
-import dash_core_components as dcc
-import dash_html_components as html
-import dash_bootstrap_components as dbc
+from dash import Dash, dash_table
 import pandas as pd
+from collections import OrderedDict
 
-df = pd.read_csv(
-    'https://gist.githubusercontent.com/chriddyp/'
-    'c78bf172206ce24f77d6363a2d754b59/raw/'
-    'c353e8ef842413cae56ae3920b8fd78468aa4cb2/'
-    'usa-agricultural-exports-2011.csv')
+app = Dash(__name__)
 
+data = OrderedDict(
+    [
+        ("Date", ["2015-01-01", "2015-10-24", "2016-05-10", "2017-01-10", "2018-05-10", "2018-08-15"]),
+        ("Region", ["Montreal", "Toronto", "New York City", "Miami", "San Francisco", "London"]),
+        ("Temperature", [1, -20, 3.512, 4, 10423, -441.2]),
+        ("Humidity", [10, 20, 30, 40, 50, 60]),
+        ("Pressure", [2, 10924, 3912, -10, 3591.2, 15]),
+    ]
+)
 
-def generate_table(dataframe, max_rows=10):
-    return html.Table(
-        # Header
-        [html.Tr([html.Th(col) for col in dataframe.columns])] +
+df = pd.DataFrame(
+    OrderedDict([(name, col_data * 10) for (name, col_data) in data.items()])
+)
 
-        # Body
-        [html.Tr([
-            html.Td(dataframe.iloc[i][col]) for col in dataframe.columns
-        ]) for i in range(min(len(dataframe), max_rows))]
-    )
-
-
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-
-app.layout = html.Div(children=[
-    html.H4(children='US Agriculture Exports (2011)'),
-    generate_table(df)
-])
+app.layout = dash_table.DataTable(
+    data=df.to_dict('records'),
+    columns=[{'id': c, 'name': c} for c in df.columns],
+    page_action='none',
+    style_table={'height': '300px', 'overflowY': 'auto'}
+)
 
 if __name__ == '__main__':
     app.run_server(debug=True)

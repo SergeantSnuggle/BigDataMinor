@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 import pandas as pd
-import retrieveData as retrieve
+from retrieveData import retrieve_all
 
 client = MongoClient("localhost:27017")
 db = client.assignment2
@@ -12,5 +12,5 @@ def insert_hotels(df):
 
 
 if __name__ == "__main__":
-    result = retrieve.retrieve_all("hotels")
-    # insert_hotels(result)
+    result = retrieve_all("hotels")
+    insert_hotels(result)

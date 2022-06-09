@@ -1,21 +1,49 @@
-from dash import dcc, html
+from dash import dcc, html, dash_table
 import dash_bootstrap_components as dbc
-import pandas as pd
-import plotly.express as px
-import BDSE.individual_Assignment_2.mongodb.retrieveData as retrieve
+from BDSE.individual_Assignment_2.mongodb.retrieveData import retrieve_all
 
-hotels = retrieve.retrieve_all("hotels")
-fig = px.scatter_mapbox(hotels, lat="lat", lon="lng", hover_name="Hotel_Name", hover_data=["Hotel_Address",
-                                                                                           "Average_Score",
-                                                                                           "Total_Number_of_Reviews",
-                                                                                           "lat",
-                                                                                           "lng"],
-                        color_discrete_sequence=["fuchsia"], zoom=3)
-fig.update_layout(mapbox_style="open-street-map")
-fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+data = retrieve_all('hotels')
+data = data[['Hotel_Name', 'Average_Score', 'Total_Number_of_Reviews']]
+data = data.rename(columns={'Hotel_Name': 'Hotel Name', 'Average_Score': 'Average Score',
+                            'Total_Number_of_Reviews': 'Reviews amount'})
+score_choices = []
+for i in range(1, 11):
+    score_choices.append({"label": str(i), "value": i})
 
-home = html.Div([
-    dcc.Graph(id="map", figure=fig)
+home = dbc.Container([
+    dbc.Row(
+        dbc.Col(
+            [
+                html.P('Minimum score'),
+                dcc.Dropdown(
+                    id='dropdown-score',
+                    options=score_choices,
+                    value=1,
+                    clearable=False
+                )
+            ], className='text-center'
+        )
+    ),
+    dbc.Row([
+        dbc.Col(
+            dcc.Graph(id="hotels-map"),
+            md=8
+            ),
+        dbc.Col(
+            dash_table.DataTable(
+                style_data={
+                        'whiteSpace': 'normal',
+                        'height': 'auto',
+                        'lineHeight': '15px'
+                    },
+                data=data.to_dict('records'),
+                columns=[{'id': c, 'name': c} for c in data.columns],
+                page_action='none',
+                style_table={'height': '400px', 'overflowY': 'auto'}
+            ),
+            md=4
+        ),
+    ]),
 ])
 
 hotels_map = html.Div([
