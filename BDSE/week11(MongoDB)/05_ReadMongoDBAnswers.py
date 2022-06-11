@@ -30,7 +30,7 @@ projection= {
             "pop" : "$pop",
              "_id" : int(0)
             }
-result=db.population.find(  filter, projection)  
+result=db.population.find(filter, projection)
 source=list(result)
 resultDf=pd.DataFrame(source)
 

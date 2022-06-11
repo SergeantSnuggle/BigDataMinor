@@ -1,6 +1,7 @@
 import pymongo
 import pandas as pd
 from pymongo import MongoClient
+from BDSE.individual_Assignment_2.mongodb.retrieveData import db, retrieve_all
 
 # read csv
 filename = 'Hotel_Reviews.csv'

@@ -4,7 +4,7 @@ from dash import html
 import dash_bootstrap_components as dbc
 from dash import Dash, dcc, html, Input, Output, callback
 
-from pages.layouts import home, hotels_map
+from pages.layouts import home, test_site
 import pages.callbacks
 
 app = dash.Dash(
@@ -51,7 +51,7 @@ sidebar = html.Div(
             [
                 dbc.NavLink("Home", href="/home", id='home', active="exact"),
                 dbc.NavLink("Models", href="/models", id='models', active="exact"),
-                dbc.NavLink("Test models", href="/test-models", id='test-models', active="exact"),
+                dbc.NavLink("Test-site", href="/test", id='test-models', active="exact"),
             ],
             vertical=True,
             pills=True,
@@ -72,6 +72,8 @@ def display_page(pathname):
         return home
     elif pathname == '/models':
         return hotels_map
+    elif pathname == '/test':
+        return test_site
     else:
         return '404'
 

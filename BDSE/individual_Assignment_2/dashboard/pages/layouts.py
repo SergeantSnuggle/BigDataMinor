@@ -1,11 +1,20 @@
 from dash import dcc, html, dash_table
 import dash_bootstrap_components as dbc
-from BDSE.individual_Assignment_2.mongodb.retrieveData import retrieve_all
+import pandas as pd
+from BDSE.individual_Assignment_2.mongodb.retrieveData import retrieve_all, db
+import plotly.graph_objects as go
 
 data = retrieve_all('hotels')
-data = data[['Hotel_Name', 'Average_Score', 'Total_Number_of_Reviews']]
-data = data.rename(columns={'Hotel_Name': 'Hotel Name', 'Average_Score': 'Average Score',
-                            'Total_Number_of_Reviews': 'Reviews amount'})
+# filter = {"Hotel_Name": "hotel"}
+# result = db.hotel_reviews_raw.find(filter, {'_id': False})
+# source = list(result)
+# resultDf = pd.DataFrame(source)
+# dataTable = resultDf[['Negative_Review', 'Positive_Review', 'Reviewer_Score']]
+
+
+variables = {"Negative_Review": "", 'Positive_Review': "", 'Reviewer_Score': ""}
+emptyDf = pd.DataFrame(variables, index=[])
+
 score_choices = []
 for i in range(1, 11):
     score_choices.append({"label": str(i), "value": i})
@@ -27,30 +36,29 @@ home = dbc.Container([
     dbc.Row([
         dbc.Col(
             dcc.Graph(id="hotels-map"),
-            md=8
-            ),
+        ),
+    ]),
+    dbc.Row([
         dbc.Col(
             dash_table.DataTable(
+                id='reviews-table',
                 style_data={
-                        'whiteSpace': 'normal',
-                        'height': 'auto',
-                        'lineHeight': '15px'
-                    },
-                data=data.to_dict('records'),
-                columns=[{'id': c, 'name': c} for c in data.columns],
+                    'whiteSpace': 'normal',
+                    'height': 'auto',
+                    'lineHeight': '15px'
+                },
+                data=emptyDf.to_dict('records'),
+                columns=[{'id': c, 'name': c} for c in emptyDf.columns],
                 page_action='none',
+                editable=True,
+                sort_action="native",
+                sort_mode='multi',
                 style_table={'height': '400px', 'overflowY': 'auto'}
             ),
-            md=4
         ),
     ]),
 ])
+test_site = dbc.Container([
+    dbc.Row()
 
-hotels_map = html.Div([
-    html.H3('Home'),
-    dcc.Dropdown(
-        {f'Page 1 - {i}': f'{i}' for i in ['New York City', 'Montreal', 'Los Angeles']},
-        id='page-1-dropdown'
-    ),
-    html.Div(id='page-1-display-value'),
 ])

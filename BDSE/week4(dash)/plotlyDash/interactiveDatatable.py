@@ -1,7 +1,7 @@
 from dash import Dash, dash_table, dcc, html
 from dash.dependencies import Input, Output
 import pandas as pd
-
+# https://dash.plotly.com/datatable/interactivity
 df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/gapminder2007.csv')
 
 app = Dash(__name__)

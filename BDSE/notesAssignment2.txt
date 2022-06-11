@@ -16,3 +16,5 @@ Een rij met cijfer, zoals hoeveel reviews, hoeveel pos/neg, score van modelen?, 
 ToDo: Maak een aparte database met alle hotels erin(met locatie en average score) voor de main map
 
 reviews splitten in positief en negatief (van alle reviews) niet gebasseerd op cijfer(als er meer dan 5 woorden in de negatieve review staan)
+
+Als je klikt op een hotel in de map, ga naar een pagina met alle reviews van dat hotel
