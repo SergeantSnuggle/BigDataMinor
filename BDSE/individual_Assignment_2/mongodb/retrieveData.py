@@ -70,7 +70,7 @@ def retrieve_unique_hotels(min_hotel_score=1):
 
 
 def retrieve_avg_nat():
-    test = db.hotel_reviews_raw.aggregate([
+    avgNat = db.hotel_reviews_raw.aggregate([
         {"$group": {
             "_id": "$Reviewer_Nationality",
             "average_review_score": {
@@ -79,11 +79,27 @@ def retrieve_avg_nat():
         }
         }
     ])
-    results = pd.DataFrame(list(test))
+    results = pd.DataFrame(list(avgNat))
     results = results.rename(columns={'_id': 'nationality'})
     results['nationality'].replace(' ', np.nan, inplace=True)
     results.dropna(subset=['nationality'], inplace=True)
     return results
+
+
+def retrieve_longest_reviews():
+    pos = db.labelled_reviews.find({'label': 1}, {'_id': False}).sort('review_word_count', -1).limit(10000)
+    posList = list(pos)
+    posDf = pd.DataFrame(posList)
+
+    neg = db.labelled_reviews.find({'label': 0}, {'_id': False}).sort('review_word_count', -1).limit(10000)
+    negList = list(neg)
+    negDf = pd.DataFrame(negList)
+
+    allReviews = pd.concat([negDf, posDf], axis=0)
+
+    shuffleAll = allReviews.sample(frac=1).reset_index(drop=True)
+
+    return shuffleAll
 
 
 if __name__ == '__main__':
@@ -94,4 +110,4 @@ if __name__ == '__main__':
     # resultDf = pd.DataFrame(source)
     # dataTable = resultDf[['Negative_Review', 'Positive_Review', 'Reviewer_Score']]
 
-    result = retrieve_unique_hotels()
+    all = retrieve_longest_reviews()
