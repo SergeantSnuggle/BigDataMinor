@@ -38,10 +38,16 @@ def stem_text(reviews):
     return [' '.join([stemmer.stem(word) for word in review.split()]) for review in reviews]
 
 
+
+def clean_text_pandas(df):
+    df["review"] = preprocess_reviews(df['review'])
+    df["review"] = remove_stop_words(df['review'])
+    df["review"] = stem_text(df['review'])
+    return df
+
+
 def clean_text_dask(df):
     df["review"] = preprocess_reviews(df['review'])
-    #df["review"] = remove_stop_words(df['review'])
-    #df["review"] = stem_text(df['review'])
     return df
 
 
