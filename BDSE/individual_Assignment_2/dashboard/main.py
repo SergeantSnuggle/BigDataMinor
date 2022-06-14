@@ -4,7 +4,7 @@ from dash import html
 import dash_bootstrap_components as dbc
 from dash import Dash, dcc, html, Input, Output, callback
 
-from pages.layouts import home, test_site
+from pages.layouts import home, models, test_site
 import pages.callbacks
 
 app = dash.Dash(
@@ -71,7 +71,7 @@ def display_page(pathname):
     if pathname == '/home' or pathname == '/':
         return home
     elif pathname == '/models':
-        return hotels_map
+        return models
     elif pathname == '/test':
         return test_site
     else:

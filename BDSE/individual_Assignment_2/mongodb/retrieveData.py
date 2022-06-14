@@ -87,17 +87,18 @@ def retrieve_avg_nat():
 
 
 def retrieve_longest_reviews():
-    pos = db.labelled_reviews.find({'label': 1}, {'_id': False}).sort('review_word_count', -1).limit(10000)
+    #.sort('review_word_count', -1)
+    pos = db.labelled_reviews.find({'label': 1}, {'_id': False}).limit(5000)
     posList = list(pos)
     posDf = pd.DataFrame(posList)
 
-    neg = db.labelled_reviews.find({'label': 0}, {'_id': False}).sort('review_word_count', -1).limit(10000)
+    neg = db.labelled_reviews.find({'label': 0}, {'_id': False}).limit(5000)
     negList = list(neg)
     negDf = pd.DataFrame(negList)
 
-    allReviews = pd.concat([negDf, posDf], axis=0)
+    allReviews = pd.concat([negDf, posDf], ignore_index=True)
 
-    shuffleAll = allReviews.sample(frac=1).reset_index(drop=True)
+    shuffleAll = allReviews.sample(frac=1)
 
     return shuffleAll
 

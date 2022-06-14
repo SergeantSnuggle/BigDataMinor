@@ -17,6 +17,8 @@ def preprocess_reviews(reviews):
     reviews = [REPLACE_NO_SPACE.sub(NO_SPACE, line.lower()) for line in reviews]
     reviews = [REPLACE_WITH_SPACE.sub(SPACE, line) for line in reviews]
 
+    reviews = remove_stop_words(reviews)
+    reviews = stem_text(reviews)
     return reviews
 
 

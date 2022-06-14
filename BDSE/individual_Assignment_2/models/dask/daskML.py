@@ -11,12 +11,12 @@ from joblib import dump, load
 import json
 from matplotlib import pyplot as plt
 
-from BDSE.individual_Assignment_2.mongodb.retrieveData import retrieve_all
+from BDSE.individual_Assignment_2.mongodb.retrieveData import retrieve_longest_reviews
 from BDSE.individual_Assignment_2.data.cleaning import dask_preprocessing, preprocess_reviews
 
 
-def build_dask_ml():
-    reviews = retrieve_all("labelled_reviews")
+def build_model():
+    reviews = retrieve_longest_reviews()
 
     daskReviews = dask_preprocessing(reviews)
 
@@ -100,7 +100,7 @@ def get_dask_results():
 
 
 if __name__ == "__main__":
-    #build_dask_ml()
+    #build_model()
 
     #test = live_predict_dask("I really hated this hotel. Its really dirty")
 

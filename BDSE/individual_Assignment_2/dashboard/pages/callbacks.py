@@ -1,8 +1,10 @@
-from dash import Input, Output, callback, State, dash_table
+from dash import Input, Output, callback, State, dash_table, callback_context
 import pandas as pd
 import plotly.express as px
 from BDSE.individual_Assignment_2.mongodb.retrieveData import db, retrieve_unique_hotels
+from BDSE.individual_Assignment_2.models.keras.regular import regular
 import plotly.graph_objects as go
+from dash.exceptions import PreventUpdate
 
 
 @callback(
@@ -87,3 +89,20 @@ def update_table_map(value=None):
         resultDf = pd.DataFrame(source)
         dataTable = resultDf[['Negative_Review', 'Positive_Review', 'Reviewer_Score']]
         return dataTable.to_dict("records"), [{'id': c, 'name': c} for c in dataTable.columns]
+
+
+@callback(
+    Output('output-state', 'children'),
+    Input('submit-button-state', 'n_clicks'),
+    State('input-1-state', 'value'),
+)
+def keras_ann_result(n_clicks, value):
+    value = str(value)
+    changed_id = [p['prop_id'] for p in callback_context.triggered][0]
+    if 'submit-button-state' not in changed_id:
+        raise PreventUpdate
+    result = regular.live_predict_model_regular(value)
+    if result > 0.5:
+        return 'positive'
+    else:
+        return 'negative'

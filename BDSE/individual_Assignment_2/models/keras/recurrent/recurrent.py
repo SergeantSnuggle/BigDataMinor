@@ -6,25 +6,22 @@ from sklearn.model_selection import train_test_split
 from tensorflow import keras
 
 from matplotlib import pyplot as plt
-# Keras
-from keras.callbacks import TensorBoard
-from keras.preprocessing.text import one_hot
 from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
 from keras.models import Sequential
 from keras.layers.core import Activation, Dropout, Dense
-from keras.layers import Flatten
 from keras.layers.embeddings import Embedding
 from keras.layers.recurrent import LSTM
 from BDSE.individual_Assignment_2.mongodb.retrieveData import retrieve_longest_reviews
-from BDSE.individual_Assignment_2.data.cleaning import clean_text_pandas
+from BDSE.individual_Assignment_2.data.cleaning import preprocess_reviews
 
 
 def build_model():
     reviews = retrieve_longest_reviews()
-    cleanedReviews = clean_text_pandas(reviews)
-    X = cleanedReviews['review']
-    y = cleanedReviews['label']
+    X = reviews['review']
+    y = reviews['label']
+
+    X = preprocess_reviews(X)
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
 
@@ -48,7 +45,8 @@ def build_model():
     # create the model
     model = Sequential()
     model.add(Embedding(vocab_size, 32, input_length=max_len))
-    model.add(LSTM(128))
+    model.add(LSTM(6))
+    model.add(Dropout(0.1))
     model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['acc'])
     print(model.summary())
@@ -66,7 +64,7 @@ def build_model():
     plt.ylabel('accuracy')
     plt.xlabel('epoch')
     plt.legend(['train', 'test'], loc='upper left')
-    plt.savefig('model.png')
+    plt.savefig('rnnmodel.png')
     plt.close()
 
     additional_model_values = {
@@ -82,9 +80,39 @@ def build_model():
         file.write(json_additional_model_values)
     file.close()
     model.save('kerasRNN')
-    dump(tokenizer, '../tokenizer.sav')
+    dump(tokenizer, 'tokenizer.sav')
 
+
+def live_predict_model_recurrent(review):
+    model = keras.models.load_model('kerasRNN')
+    vect = load('tokenizer.sav')
+
+    processed_review = preprocess_reviews([review])
+    # make dictionary to get correct result
+    instance = vect.texts_to_sequences(processed_review)
+
+    flat_list = []
+    for sublist in instance:
+        for item in sublist:
+            flat_list.append(item)
+
+    flat_list = [flat_list]
+
+    instance = pad_sequences(flat_list, padding='post', maxlen=50)
+
+    return model.predict(instance)
+
+
+def get_recurrent_results():
+    file = open('variables.json')
+    results = file.read()
+    json_results = json.loads(results)
 
 
 if __name__ == "__main__":
     build_model()
+    result = live_predict_model_recurrent('Disappointed by housekeeping staff knocking on door to clean room before 8 30am on day of checkout')
+    if result > 0.5:
+        print('hihi')
+    else:
+        print("fu")

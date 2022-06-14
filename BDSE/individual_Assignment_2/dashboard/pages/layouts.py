@@ -4,12 +4,9 @@ import pandas as pd
 from BDSE.individual_Assignment_2.mongodb.retrieveData import retrieve_all, db
 import plotly.graph_objects as go
 
+
+
 data = retrieve_all('hotels')
-# filter = {"Hotel_Name": "hotel"}
-# result = db.hotel_reviews_raw.find(filter, {'_id': False})
-# source = list(result)
-# resultDf = pd.DataFrame(source)
-# dataTable = resultDf[['Negative_Review', 'Positive_Review', 'Reviewer_Score']]
 
 
 variables = {"Negative_Review": "", 'Positive_Review': "", 'Reviewer_Score': ""}
@@ -61,4 +58,26 @@ home = dbc.Container([
 test_site = dbc.Container([
     dbc.Row()
 
+])
+
+models = dbc.Container([
+    dbc.Row(dbc.Col(
+        dbc.Card([
+            dbc.CardHeader('Keras Recurrent Neural Network'),
+            dbc.CardBody(
+                [
+                    dbc.Form(
+                        dbc.Row(
+                            [
+                                dcc.Input(id='input-1-state', type='text'),
+                                html.Button(id='submit-button-state', n_clicks=0, children='Submit'),
+                            ]
+                        )
+                    ),
+                    html.Div(id='output-state')
+                ]
+            )], className='text-center'
+        ), id='test-keras-recurrent'
+        ),
+    )
 ])
