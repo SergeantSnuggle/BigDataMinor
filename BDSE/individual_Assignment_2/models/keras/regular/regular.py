@@ -5,6 +5,7 @@ import pandas as pd
 from joblib import load, dump
 from sklearn.model_selection import train_test_split
 from tensorflow import keras
+from sklearn.metrics import roc_auc_score, roc_curve
 
 from matplotlib import pyplot as plt
 from keras.preprocessing.sequence import pad_sequences
@@ -22,7 +23,7 @@ def build_model():
     X = reviews['review']
     y = reviews['label']
 
-    X = preprocess_reviews(X)
+    X = preprocess_reviews(X, 0)
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
 
@@ -53,7 +54,7 @@ def build_model():
     model.add(Dropout(0.5))
     model.add(Dense(8, activation='relu'))
     model.add(Dense(1, activation='sigmoid'))
-    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['acc'])
+    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['acc', keras.metrics.AUC()])
     print(model.summary())
 
     # Fit the model
@@ -65,6 +66,7 @@ def build_model():
     print(model.metrics_names)
     print("Test Score:", score[0])
     print("Test Accuracy:", score[1])
+    print("AUC:", score[2])
 
     plt.plot(history.history['acc'])
     plt.plot(history.history['val_acc'])
@@ -78,6 +80,7 @@ def build_model():
     additional_model_values = {
         'test_score': round(score[0], 3),
         'test_accuracy': round(score[1], 3),
+        'auc': round(score[2], 3),
         'date': str(datetime.now().replace(microsecond=0)),
         'duration': round(time.time() - start_time, 2),
         'amount_of_reviews': len(reviews)
@@ -95,7 +98,7 @@ def live_predict_model_regular(review):
     model = keras.models.load_model('E:/Roy Dijkstra/School/BigData/BDSE/individual_Assignment_2/models/keras/regular/kerasANN')
     vect = load('E:/Roy Dijkstra/School/BigData/BDSE/individual_Assignment_2/models/keras/regular/tokenizer.sav')
 
-    processed_review = preprocess_reviews([review])
+    processed_review = preprocess_reviews([review], 0)
     # make dictionary to get correct result
     instance = vect.texts_to_sequences(processed_review)
 
@@ -116,7 +119,7 @@ def live_predict_model_regular(review):
 
 
 def get_regular_results():
-    file = open('variables.json')
+    file = open('E:/Roy Dijkstra/School/BigData/BDSE/individual_Assignment_2/models/keras/regular/variables.json')
     results = file.read()
     json_results = json.loads(results)
 
@@ -124,11 +127,11 @@ def get_regular_results():
 
 
 if __name__ == "__main__":
-    #build_model()
-    result = live_predict_model_regular("Disappointed by housekeeping staff knocking on door to clean room before 8 30am on day of checkout ")
-    if result > 0.5:
-        print('hihi')
-    else:
-        print("fu")
+    build_model()
+    #result = live_predict_model_regular("Disappointed by housekeeping staff knocking on door to clean room before 8 30am on day of checkout ")
+    # if result > 0.5:
+    #     print('hihi')
+    # else:
+    #     print("fu")
 
 

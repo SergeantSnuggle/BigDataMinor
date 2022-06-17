@@ -1,8 +1,13 @@
-from dash import Input, Output, callback, State, dash_table, callback_context
+import base64
+
+from dash import Input, Output, callback, State, dash_table, callback_context, html
+import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
 from BDSE.individual_Assignment_2.mongodb.retrieveData import db, retrieve_unique_hotels
+from BDSE.individual_Assignment_2.models.dask import daskML
 from BDSE.individual_Assignment_2.models.keras.regular import regular
+from BDSE.individual_Assignment_2.models.keras.recurrent import recurrent
 import plotly.graph_objects as go
 from dash.exceptions import PreventUpdate
 
@@ -80,7 +85,7 @@ def update_table_map(value=None):
     if value is None:
         variables = {"Negative_Review": "", 'Positive_Review': "", 'Reviewer_Score': ""}
         emptyDf = pd.DataFrame(variables, index=[])
-        return emptyDf
+        return emptyDf.to_dict('records'), [{'id': c, 'name': c} for c in emptyDf.columns]
     else:
         hotel = value['points'][0]['text']
         filter = {"Hotel_Name": hotel}
@@ -92,17 +97,98 @@ def update_table_map(value=None):
 
 
 @callback(
-    Output('output-state', 'children'),
-    Input('submit-button-state', 'n_clicks'),
-    State('input-1-state', 'value'),
+    Output('dask-output', 'children'),
+    Input('dask-button', 'n_clicks'),
+    State('dask-input', 'value'),
+)
+def dask_result(n_clicks, value):
+    value = str(value)
+    changed_id = [p['prop_id'] for p in callback_context.triggered][0]
+    if 'dask-button' not in changed_id:
+        raise PreventUpdate
+    result = daskML.live_predict_dask(value)
+    if result > 0.5:
+        return 'positive'
+    else:
+        return 'negative'
+
+
+@callback(
+    Output('keras-ann-output', 'children'),
+    Input('keras-ann-button', 'n_clicks'),
+    State('keras-ann-input', 'value'),
 )
 def keras_ann_result(n_clicks, value):
     value = str(value)
     changed_id = [p['prop_id'] for p in callback_context.triggered][0]
-    if 'submit-button-state' not in changed_id:
+    if 'keras-ann-button' not in changed_id:
         raise PreventUpdate
     result = regular.live_predict_model_regular(value)
     if result > 0.5:
         return 'positive'
     else:
         return 'negative'
+
+
+@callback(
+    Output('keras-rnn-output', 'children'),
+    Input('keras-rnn-button', 'n_clicks'),
+    State('keras-rnn-input', 'value'),
+)
+def keras_rnn_result(n_clicks, value):
+    value = str(value)
+    changed_id = [p['prop_id'] for p in callback_context.triggered][0]
+    if 'keras-rnn-button' not in changed_id:
+        raise PreventUpdate
+    result = recurrent.live_predict_model_recurrent(value)
+    if result > 0.5:
+        return 'positive'
+    else:
+        return 'negative'
+
+
+@callback(
+    Output('dask-results', 'children'),
+    Output('keras-ann-results', 'children'),
+    Output('keras-rnn-results', 'children'),
+    Input('model_results', 'value'),
+)
+def get_model_results(result_id):
+    daskResults = daskML.get_dask_results()
+    kerasAnnResults = regular.get_regular_results()
+    kerasRnnResults = recurrent.get_recurrent_results()
+
+    daskImage = 'E:/Roy Dijkstra/School/BigData/BDSE/individual_Assignment_2/dashboard/images/daskModel.png'
+    encodedDaskImage = base64.b64encode(open(daskImage, 'rb').read())
+    kerasAnnImage = 'E:/Roy Dijkstra/School/BigData/BDSE/individual_Assignment_2/dashboard/images/annmodel.png'
+    encodedKerasAnnImage = base64.b64encode(open(kerasAnnImage, 'rb').read())
+    kerasRnnImage = 'E:/Roy Dijkstra/School/BigData/BDSE/individual_Assignment_2/dashboard/images/rnnmodel.png'
+    encodedkerasRnnImage = base64.b64encode(open(kerasRnnImage, 'rb').read())
+
+    daskCard = dbc.Card([
+        dbc.CardHeader("Dask Incremental"),
+        html.Img(src='data:image/png;base64,{}'.format(encodedDaskImage.decode())),
+        dbc.CardBody([
+            html.P(children=[create_values(name, value) for name, value in daskResults.items()]), html.Br(),
+        ])
+    ])
+    kerasAnnCard = dbc.Card([
+        dbc.CardHeader("Keras ANN"),
+        html.Img(src='data:image/png;base64,{}'.format(encodedKerasAnnImage.decode())),
+        dbc.CardBody([
+            html.P(children=[create_values(name, value) for name, value in kerasAnnResults.items()]), html.Br(),
+        ])
+    ])
+    kerasRnnCard = dbc.Card([
+        dbc.CardHeader("Keras RNN"),
+        html.Img(src='data:image/png;base64,{}'.format(encodedkerasRnnImage.decode())),
+        dbc.CardBody([
+            html.P(children=[create_values(name, value) for name, value in kerasRnnResults.items()]), html.Br(),
+        ])
+    ])
+
+    return daskCard, kerasAnnCard, kerasRnnCard
+
+
+def create_values(name, value):
+    return html.P(str(name) + ": " + str(value))

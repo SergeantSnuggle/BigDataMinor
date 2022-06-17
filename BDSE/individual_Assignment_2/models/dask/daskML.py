@@ -11,12 +11,12 @@ from joblib import dump, load
 import json
 from matplotlib import pyplot as plt
 
-from BDSE.individual_Assignment_2.mongodb.retrieveData import retrieve_longest_reviews
+from BDSE.individual_Assignment_2.mongodb.retrieveData import retrieve_longest_reviews, retrieve_all
 from BDSE.individual_Assignment_2.data.cleaning import dask_preprocessing, preprocess_reviews
 
 
 def build_model():
-    reviews = retrieve_longest_reviews()
+    reviews = retrieve_all('labelled_reviews')
 
     daskReviews = dask_preprocessing(reviews)
 
@@ -79,20 +79,23 @@ def build_model():
 
 
 def live_predict_dask(review):
-    model = load('daskmodel.joblib')
-    vect = load('daskcv.sav')
+    model = load('E:/Roy Dijkstra/School/BigData/BDSE/individual_Assignment_2/models/dask/daskmodel.joblib')
+    vect = load('E:/Roy Dijkstra/School/BigData/BDSE/individual_Assignment_2/models/dask/daskcv.sav')
 
-    process_review = preprocess_reviews([review])
+    process_review = preprocess_reviews([review], 1)
 
     vectReview = vect.transform(process_review)
 
     prediction = model.predict(vectReview)
 
-    return prediction
+    resultPrediction = prediction.flat[0]
+    resultPrediction = round(resultPrediction, 2)
+
+    return resultPrediction
 
 
 def get_dask_results():
-    file = open('daskValues.json')
+    file = open('E:/Roy Dijkstra/School/BigData/BDSE/individual_Assignment_2/models/dask/daskValues.json')
     results = file.read()
     json_results = json.loads(results)
 
@@ -102,6 +105,7 @@ def get_dask_results():
 if __name__ == "__main__":
     #build_model()
 
-    #test = live_predict_dask("I really hated this hotel. Its really dirty")
+    #test = live_predict_dask(" near the beach clean modern hotel good choice for breakfast")
 
     test = get_dask_results()
+

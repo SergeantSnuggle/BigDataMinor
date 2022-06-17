@@ -8,7 +8,7 @@ import time
 from BDSE.individual_Assignment_2.mongodb.retrieveData import retrieve_all
 
 
-def preprocess_reviews(reviews):
+def preprocess_reviews(reviews, dask):
     REPLACE_NO_SPACE = re.compile("(\.)|(\;)|(\:)|(\!)|(\?)|(\,)|(\")|(\()|(\))|(\[)|(\])|(\d+)")
     REPLACE_WITH_SPACE = re.compile("(<br\s*/><br\s*/>)|(\-)|(\/)")
     NO_SPACE = ""
@@ -17,9 +17,11 @@ def preprocess_reviews(reviews):
     reviews = [REPLACE_NO_SPACE.sub(NO_SPACE, line.lower()) for line in reviews]
     reviews = [REPLACE_WITH_SPACE.sub(SPACE, line) for line in reviews]
 
-    reviews = remove_stop_words(reviews)
-    reviews = stem_text(reviews)
-    return reviews
+    if dask == 1:
+        return reviews
+    else:
+        reviews = remove_stop_words(reviews)
+        return reviews
 
 
 def remove_stop_words(reviews):
@@ -40,16 +42,15 @@ def stem_text(reviews):
     return [' '.join([stemmer.stem(word) for word in review.split()]) for review in reviews]
 
 
-
 def clean_text_pandas(df):
-    df["review"] = preprocess_reviews(df['review'])
+    df["review"] = preprocess_reviews(df['review'], 0)
     df["review"] = remove_stop_words(df['review'])
     df["review"] = stem_text(df['review'])
     return df
 
 
 def clean_text_dask(df):
-    df["review"] = preprocess_reviews(df['review'])
+    df["review"] = preprocess_reviews(df['review'], 1)
     return df
 
 

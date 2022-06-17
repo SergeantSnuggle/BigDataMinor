@@ -4,10 +4,7 @@ import pandas as pd
 from BDSE.individual_Assignment_2.mongodb.retrieveData import retrieve_all, db
 import plotly.graph_objects as go
 
-
-
 data = retrieve_all('hotels')
-
 
 variables = {"Negative_Review": "", 'Positive_Review': "", 'Reviewer_Score': ""}
 emptyDf = pd.DataFrame(variables, index=[])
@@ -32,52 +29,114 @@ home = dbc.Container([
     ),
     dbc.Row([
         dbc.Col(
-            dcc.Graph(id="hotels-map"),
+            dbc.Spinner(children=[dcc.Graph(id="hotels-map")], color='primary'),
         ),
     ]),
     dbc.Row([
         dbc.Col(
-            dash_table.DataTable(
-                id='reviews-table',
-                style_data={
-                    'whiteSpace': 'normal',
-                    'height': 'auto',
-                    'lineHeight': '15px'
-                },
-                data=emptyDf.to_dict('records'),
-                columns=[{'id': c, 'name': c} for c in emptyDf.columns],
-                page_action='none',
-                editable=True,
-                sort_action="native",
-                sort_mode='multi',
-                style_table={'height': '400px', 'overflowY': 'auto'}
-            ),
+            dbc.Spinner(children=[
+                dash_table.DataTable(
+                    id='reviews-table',
+                    style_data={
+                        'whiteSpace': 'normal',
+                        'height': 'auto',
+                        'lineHeight': '15px'
+                    },
+                    data=emptyDf.to_dict('records'),
+                    columns=[{'id': c, 'name': c} for c in emptyDf.columns],
+                    page_action='none',
+                    editable=True,
+                    sort_action="native",
+                    sort_mode='multi',
+                    style_table={'height': '400px', 'overflowY': 'auto'}
+                )],
+            )
         ),
     ]),
 ])
-test_site = dbc.Container([
-    dbc.Row()
-
-])
 
 models = dbc.Container([
+    dbc.Row([
+        dbc.Col(
+            id='dask-results',
+            md=4,
+        ),
+        dbc.Col(
+            id='keras-ann-results',
+            md=4,
+        ),
+        dbc.Col(
+            id='keras-rnn-results',
+            md=4,
+        ),
+    ], id='model_results'
+    )
+])
+
+test_site = dbc.Container([
+    dbc.Row()
+])
+
+test_models = dbc.Container([
     dbc.Row(dbc.Col(
         dbc.Card([
-            dbc.CardHeader('Keras Recurrent Neural Network'),
+            dbc.CardHeader('Test models:'),
             dbc.CardBody(
                 [
-                    dbc.Form(
-                        dbc.Row(
-                            [
-                                dcc.Input(id='input-1-state', type='text'),
-                                html.Button(id='submit-button-state', n_clicks=0, children='Submit'),
-                            ]
-                        )
+                    dbc.Row(
+                        [
+                            dbc.Label("Dask:", width=2),
+                            dbc.Col(
+                                dbc.Input(id='dask-input', type='text'),
+                                width=6
+                            ),
+                            dbc.Col(
+                                dbc.Button(id='dask-button', n_clicks=0, children='Submit'),
+                                width=2
+                            ),
+                            dbc.Col(
+                                dbc.Spinner(children=[html.Div(id='dask-output')], size='sm', color='primary'),
+                                width=2
+                            ),
+                        ], className='mb-3',
                     ),
-                    html.Div(id='output-state')
+                    dbc.Row(
+                        [
+                            dbc.Label("Keras ANN:", width=2),
+                            dbc.Col(
+                                dbc.Input(id='keras-ann-input', type='text'),
+                                width=6
+                            ),
+                            dbc.Col(
+                                dbc.Button(id='keras-ann-button', n_clicks=0, children='Submit'),
+                                width=2
+                            ),
+                            dbc.Col(
+                                dbc.Spinner(children=[html.Div(id='keras-ann-output')], size='sm', color='primary'),
+                                width=2
+                            ),
+                        ], className='mb-3',
+                    ),
+                    dbc.Row(
+                        [
+                            dbc.Label("Keras RNN:", width=2),
+                            dbc.Col(
+                                dbc.Input(id='keras-rnn-input', type='text'),
+                                width=6
+                            ),
+                            dbc.Col(
+                                dbc.Button(id='keras-rnn-button', n_clicks=0, children='Submit'),
+                                width=2
+                            ),
+                            dbc.Col(
+                                dbc.Spinner(children=[html.Div(id='keras-rnn-output')], size='sm', color='primary'),
+                                width=2
+                            ),
+                        ], className='mb-3',
+                    )
                 ]
             )], className='text-center'
-        ), id='test-keras-recurrent'
+        ), id='test-keras-artificial'
         ),
     )
 ])

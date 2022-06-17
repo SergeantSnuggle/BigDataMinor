@@ -21,7 +21,7 @@ def build_model():
     X = reviews['review']
     y = reviews['label']
 
-    X = preprocess_reviews(X)
+    X = preprocess_reviews(X, 0)
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
 
@@ -48,7 +48,7 @@ def build_model():
     model.add(LSTM(6))
     model.add(Dropout(0.1))
     model.add(Dense(1, activation='sigmoid'))
-    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['acc'])
+    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['acc', keras.metrics.AUC()])
     print(model.summary())
 
     history = model.fit(X_train, y_train, batch_size=128, epochs=10, verbose=1, validation_split=0.2)
@@ -57,6 +57,7 @@ def build_model():
 
     print("Test Score:", score[0])
     print("Test Accuracy:", score[1])
+    print("AUC:", score[2])
 
     plt.plot(history.history['acc'])
     plt.plot(history.history['val_acc'])
@@ -70,6 +71,7 @@ def build_model():
     additional_model_values = {
         'test_score': round(score[0], 3),
         'test_accuracy': round(score[1], 3),
+        'auc': round(score[2], 3),
         'date': str(datetime.now().replace(microsecond=0)),
         'duration': round(time.time() - start_time, 2),
         'amount_of_reviews': len(reviews)
@@ -84,10 +86,10 @@ def build_model():
 
 
 def live_predict_model_recurrent(review):
-    model = keras.models.load_model('kerasRNN')
-    vect = load('tokenizer.sav')
+    model = keras.models.load_model('E:/Roy Dijkstra/School/BigData/BDSE/individual_Assignment_2/models/keras/recurrent/kerasRNN')
+    vect = load('E:/Roy Dijkstra/School/BigData/BDSE/individual_Assignment_2/models/keras/recurrent/tokenizer.sav')
 
-    processed_review = preprocess_reviews([review])
+    processed_review = preprocess_reviews([review], 0)
     # make dictionary to get correct result
     instance = vect.texts_to_sequences(processed_review)
 
@@ -99,20 +101,25 @@ def live_predict_model_recurrent(review):
     flat_list = [flat_list]
 
     instance = pad_sequences(flat_list, padding='post', maxlen=50)
+    resultPrediction = model.predict(instance)
 
-    return model.predict(instance)
+    resultPrediction = resultPrediction.flat[0]
+    resultPrediction = round(resultPrediction, 2)
+
+    return resultPrediction
 
 
 def get_recurrent_results():
-    file = open('variables.json')
+    file = open('E:/Roy Dijkstra/School/BigData/BDSE/individual_Assignment_2/models/keras/recurrent/variables.json')
     results = file.read()
     json_results = json.loads(results)
 
+    return json_results
 
 if __name__ == "__main__":
-    build_model()
+    #build_model()
     result = live_predict_model_recurrent('Disappointed by housekeeping staff knocking on door to clean room before 8 30am on day of checkout')
-    if result > 0.5:
-        print('hihi')
-    else:
-        print("fu")
+    # if result > 0.5:
+    #     print('hihi')
+    # else:
+    #     print("fu")
