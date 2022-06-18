@@ -14,17 +14,17 @@ for i in range(1, 11):
     score_choices.append({"label": str(i), "value": i})
 
 home = dbc.Container([
+    dbc.Row(id='dashboard-top'),
     dbc.Row(
-        dbc.Col(
-            [
-                html.P('Minimum score'),
-                dcc.Dropdown(
-                    id='dropdown-score',
-                    options=score_choices,
-                    value=1,
-                    clearable=False
-                )
-            ], className='text-center'
+        dbc.Col([
+            html.P('Minimum score'),
+            dcc.Dropdown(
+                id='dropdown-score',
+                options=score_choices,
+                value=1,
+                clearable=False
+            )
+        ], className='text-center'
         )
     ),
     dbc.Row([

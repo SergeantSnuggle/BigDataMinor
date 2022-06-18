@@ -4,7 +4,8 @@ from dash import Input, Output, callback, State, dash_table, callback_context, h
 import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
-from BDSE.individual_Assignment_2.mongodb.retrieveData import db, retrieve_unique_hotels
+from BDSE.individual_Assignment_2.mongodb.retrieveData import db, retrieve_unique_hotels, retrieve_amount_reviews, \
+    retrieve_amount_labelled, retrieve_amount_hotels, retrieve_avg_nat
 from BDSE.individual_Assignment_2.models.dask import daskML
 from BDSE.individual_Assignment_2.models.keras.regular import regular
 from BDSE.individual_Assignment_2.models.keras.recurrent import recurrent
@@ -192,3 +193,44 @@ def get_model_results(result_id):
 
 def create_values(name, value):
     return html.P(str(name) + ": " + str(value))
+
+
+@callback(
+    Output('dashboard-top', 'children'),
+    Input('dashboard-top', 'value'),
+)
+def get_top_dashboard(value):
+    cardGroup = dbc.CardGroup([
+        dbc.Card([
+            dbc.CardHeader('Hoeveelheid reviews:'),
+            dbc.CardBody(
+                html.P(str(retrieve_amount_reviews()), className='card-text'),
+
+            ),
+        ]),
+        dbc.Card([
+            dbc.CardHeader('Hoeveel labelled:'),
+            dbc.CardBody([
+                html.P("Positief: " + str(retrieve_amount_labelled(1)), className='card-text'),
+                html.P("Negatief: " + str(retrieve_amount_labelled(0)), className='card-text'),
+            ]),
+        ]),
+        dbc.Card([
+            dbc.CardHeader('Hoeveelheid hotels:'),
+            dbc.CardBody(
+                html.P(str(retrieve_amount_hotels()), className='card-text'),
+
+            ),
+        ]),
+        dbc.Card([
+            dbc.CardHeader('Gemiddelde score per nationaliteit'),
+            dbc.CardBody(
+                html.Div(
+                    dbc.Table.from_dataframe(retrieve_avg_nat(), striped=True, bordered=True, hover=True),
+                    style={"maxHeight": "200px", "overflow": "scroll"}
+                )
+
+            ),
+        ])
+    ])
+    return cardGroup

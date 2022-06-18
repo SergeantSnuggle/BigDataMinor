@@ -74,7 +74,10 @@ def retrieve_avg_nat():
         {"$group": {
             "_id": "$Reviewer_Nationality",
             "average_review_score": {
-                "$avg": "$Reviewer_Score"
+                "$avg": "$Reviewer_Score",
+            },
+            "amount_reviews": {
+                "$sum": 1
             }
         }
         }
@@ -83,6 +86,7 @@ def retrieve_avg_nat():
     results = results.rename(columns={'_id': 'nationality'})
     results['nationality'].replace(' ', np.nan, inplace=True)
     results.dropna(subset=['nationality'], inplace=True)
+    results['average_review_score'] = round(results['average_review_score'], 2)
     return results
 
 
@@ -103,12 +107,25 @@ def retrieve_longest_reviews():
     return shuffleAll
 
 
+def retrieve_amount_reviews():
+    amount = db.hotel_reviews_raw.count_documents({})
+
+    return amount
+
+
+def retrieve_amount_labelled(label):
+    amount = db.labelled_reviews.count_documents({'label': label}, {})
+    return amount
+
+
+def retrieve_amount_hotels():
+    amount = db.hotel_reviews_raw.distinct('Hotel_Name')
+    amount = list(amount)
+    amount = len(pd.DataFrame(amount))
+    return amount
+
+
 if __name__ == '__main__':
     #avgNat = retrieve_avg_nat()
-    # filter = {"Hotel_Name": "MiHotel"}
-    # result = db.hotel_reviews_raw.find(filter, {'_id': False})
-    # source = list(result)
-    # resultDf = pd.DataFrame(source)
-    # dataTable = resultDf[['Negative_Review', 'Positive_Review', 'Reviewer_Score']]
 
-    all = retrieve_longest_reviews()
+    count = retrieve_avg_nat()
